@@ -13,3 +13,26 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+.timers{
+  display: flex;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-right: 10px;
+
+}
+
+.value {
+  font-size: 30px;
+}
+
+.label {
+  font-size: 25px;
+  color: black;
+}
+.input{
+  margin-bottom: 10px;;
+}

@@ -6,7 +6,7 @@ import 'izitoast/dist/css/iziToast.min.css';
 function addLeadingZero(value) {
   return value < 10 ? `0${value}` : value;
 }
-
+let timerRunning = false;
 document.addEventListener('DOMContentLoaded', function () {
   let userSelectedDate;
 
@@ -19,7 +19,14 @@ document.addEventListener('DOMContentLoaded', function () {
       userSelectedDate = selectedDates[0];
 
       if (userSelectedDate < new Date()) {
-        iziToast.show('Please choose a date in the future');
+        iziToast.show({
+          message: 'Please choose a date in the future',
+          position: 'topCenter',
+          timeout: 5000,
+          backgroundColor: 'red',
+          theme: 'dark',
+          icon: 'icon-person',
+        });
         disableStartButton();
       } else {
         enableStartButton();
@@ -29,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function disableStartButton() {
     const startButton = document.querySelector('[data-start]');
+    const dateTimePicker = document.getElementById('datetime-picker');
     if (startButton) {
       startButton.disabled = true;
     }
@@ -36,13 +44,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function enableStartButton() {
     const startButton = document.querySelector('[data-start]');
-    if (startButton) {
+    const dateTimePicker = document.getElementById('datetime-picker');
+    if (startButton && dateTimePicker && !timerRunning) {
       startButton.disabled = false;
+      dateTimePicker.disabled = false;
     }
   }
 
   document.querySelector('[data-start]').addEventListener('click', function () {
     startCountdown();
+    timerRunning = true;
+    disableStartButton();
   });
 
   function startCountdown() {
@@ -65,11 +77,16 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function updateTimerDisplay({ days, hours, minutes, seconds }) {
-    const timerDisplay = document.getElementById('timer');
-    if (timerDisplay) {
-      timerDisplay.textContent = `${addLeadingZero(days)}:${addLeadingZero(
-        hours
-      )}:${addLeadingZero(minutes)}:${addLeadingZero(seconds)}`;
+    const timerDays = document.getElementById('timer-days');
+    const timerHours = document.getElementById('timer-hours');
+    const timerMinutes = document.getElementById('timer-minutes');
+    const timerSeconds = document.getElementById('timer-seconds');
+
+    if (timerDays && timerHours && timerMinutes && timerSeconds) {
+      timerDays.textContent = addLeadingZero(days);
+      timerHours.textContent = addLeadingZero(hours);
+      timerMinutes.textContent = addLeadingZero(minutes);
+      timerSeconds.textContent = addLeadingZero(seconds);
     }
   }
 
@@ -86,12 +103,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
     return { days, hours, minutes, seconds };
   }
-
-  iziToast.show({
-    title: 'Alert',
-    message: 'Please choose a date in the future',
-    position: 'topRight',
-    timeout: 5000,
-    theme: 'red',
-  });
 });
