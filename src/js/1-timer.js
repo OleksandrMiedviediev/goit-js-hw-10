@@ -6,7 +6,9 @@ import 'izitoast/dist/css/iziToast.min.css';
 function addLeadingZero(value) {
   return value < 10 ? `0${value}` : value;
 }
+
 let timerRunning = false;
+
 document.addEventListener('DOMContentLoaded', function () {
   let userSelectedDate;
 
@@ -36,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function disableStartButton() {
     const startButton = document.querySelector('[data-start]');
-    const dateTimePicker = document.getElementById('datetime-picker');
     if (startButton) {
       startButton.disabled = true;
     }
@@ -44,10 +45,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function enableStartButton() {
     const startButton = document.querySelector('[data-start]');
-    const dateTimePicker = document.getElementById('datetime-picker');
-    if (startButton && dateTimePicker && !timerRunning) {
+    if (startButton && !timerRunning) {
       startButton.disabled = false;
-      dateTimePicker.disabled = false;
     }
   }
 
@@ -77,10 +76,10 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function updateTimerDisplay({ days, hours, minutes, seconds }) {
-    const timerDays = document.getElementById('timer-days');
-    const timerHours = document.getElementById('timer-hours');
-    const timerMinutes = document.getElementById('timer-minutes');
-    const timerSeconds = document.getElementById('timer-seconds');
+    const timerDays = document.querySelector('[data-days]');
+    const timerHours = document.querySelector('[data-hours]');
+    const timerMinutes = document.querySelector('[data-minutes]');
+    const timerSeconds = document.querySelector('[data-seconds]');
 
     if (timerDays && timerHours && timerMinutes && timerSeconds) {
       timerDays.textContent = addLeadingZero(days);
