@@ -1,5 +1,3 @@
-import flatpickr from 'flatpickr';
-import 'flatpickr/dist/flatpickr.min.css';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
@@ -27,29 +25,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
     promise
       .then(value => {
-        iziToast.show({
+        iziToast.success({
           message: `✅ Fulfilled promise in ${value}ms`,
           position: 'topCenter',
           timeout: 5000,
           backgroundColor: 'green',
-          theme: 'light',
         });
       })
       .catch(value => {
-        iziToast.show({
+        iziToast.error({
           message: `❌ Rejected promise in ${value} ms`,
           position: 'topCenter',
           timeout: 5000,
           backgroundColor: 'red',
-          theme: 'light',
         });
       });
-  });
-
-  flatpickr('#datetime-picker', {
-    enableTime: true,
-    time_24hr: true,
-    defaultDate: new Date(),
-    minuteIncrement: 1,
   });
 });
